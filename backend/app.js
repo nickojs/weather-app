@@ -7,10 +7,6 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.get('/', (req, res, next) => {
-  res.send({ message: 'root route' });
-});
-
 //weather routes
 app.use('/weather', weatherRoutes)
 
