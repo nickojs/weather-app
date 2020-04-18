@@ -1,15 +1,16 @@
 import React from 'react';
+import * as S from './styles.js';
 
 const Searchbar = props => {
 
   return(
-    <div>
-      <input type="text" name="city" placeholder="Cidade" />
+    <S.SearchBarContainer>
+      <S.Input type="text" name="city" placeholder="Cidade" />
       <select name="state">
         <option value="teste">Teste</option>
       </select>
-      <button>Pesquisar</button>
-    </div>
+      <S.Button>Pesquisar</S.Button>
+    </S.SearchBarContainer>
   );
 }
 
