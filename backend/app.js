@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
+const weatherRoutes = require('./routes/weather');
 
 const app = express();
 
@@ -9,6 +10,9 @@ app.use(bodyParser.json());
 app.get('/', (req, res, next) => {
   res.send({ message: 'root route' });
 });
+
+//weather routes
+app.use('/weather', weatherRoutes)
 
 //error handling
 app.use((err, req, res, next) => {
