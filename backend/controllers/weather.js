@@ -1,4 +1,4 @@
-const axios = require('../helpers/axios');
+const getWeather = require('../helpers/get-weather');
 
 class WeatherController { 
   constructor() { }
@@ -6,9 +6,7 @@ class WeatherController {
   async getWeatherByCity(req, res, next) {
     try {
       const { city, state, country } = req.body;
-      const weatherRequest = await axios
-        .get(`?q=${city},${state},${country}&appid=${process.env.API_KEY}&lang=pt_br`);
-      const weatherData = weatherRequest.data;
+      const weatherData = await getWeather(city, state, country);
 
       const payload = {
         location: { city, state },
