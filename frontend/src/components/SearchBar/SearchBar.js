@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import * as S from './styles.js';
+import SelectUf from '../SelectUf/SelectUf';
 
 const Searchbar = props => {
   const [estados, setEstados] = useState([]);
@@ -17,9 +18,7 @@ const Searchbar = props => {
   return(
     <S.SearchBarContainer>
       <S.Input type="text" name="city" placeholder="Cidade" />
-      <select name="state">
-        <option value="teste">Teste</option>
-      </select>
+      <SelectUf uflist={estados}/>
       <S.Button>Pesquisar</S.Button>
     </S.SearchBarContainer>
   );
