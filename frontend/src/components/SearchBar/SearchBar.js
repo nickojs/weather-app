@@ -21,11 +21,9 @@ const Searchbar = props => {
 
   const [toggleSubmit, setToggleSubmit] = useState(false);
   useEffect(() => {
-    if(location.city !== '' && location.state !== '') {
+    setToggleSubmit(false);
+    if(location.city !== '' && location.state !== '') 
       setToggleSubmit(true);
-    } else {
-      setToggleSubmit(false);
-    }
   }, [location]);
   
   const updateLocation = (e, field) => {
