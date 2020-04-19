@@ -13,7 +13,9 @@ const Searchbar = props => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const ufs = await axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados', {
+        const ufs = await axios({
+          url: 'localidades/estados',
+          baseURL:'https://servicodados.ibge.gov.br/api/v1',
           responseType: 'json'
         });
         const ufsData = await ufs.data;
@@ -44,14 +46,15 @@ const Searchbar = props => {
     if (location.city === null || location.state === null) return;
 
     try {
-      const weatherRequest = await fetch('http://localhost:5000/weather/', {
+      const weatherRequest = await axios({
+        url: 'http://localhost:5000/weather/',
         method: 'POST',
-        body: JSON.stringify(location),
         headers: {
           'Content-Type': 'application/json'
-        }
+        },
+        data: location
       });
-      const weatherData = await weatherRequest.json();
+      const weatherData = await weatherRequest.data;
       console.log(weatherData);
     } catch (error) {
       console.log(error);
@@ -76,7 +79,6 @@ const Searchbar = props => {
         <S.Button onClick={sendLocation}>Pesquisar</S.Button>
       :
         null}
-      
     </S.SearchBarContainer>
   );
 }
