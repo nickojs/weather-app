@@ -46,8 +46,7 @@ const Searchbar = props => {
   }
 
   const sendLocation = async () => {
-    if (location.city === null || location.state === null) return;
-
+    setToggleSubmit(true);
     try {
       const weatherRequest = await axios({
         url: 'http://localhost:5000/weather/',
@@ -58,6 +57,7 @@ const Searchbar = props => {
         data: location
       });
       const weatherData = await weatherRequest.data;
+      //hook to app.js, for now just logging
       console.log(weatherData);
     } catch (error) {
       const message = error.response.data;
