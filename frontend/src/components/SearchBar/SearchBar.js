@@ -4,12 +4,15 @@ import * as S from './styles.js';
 import axios from 'axios';
 
 const Searchbar = props => {
+  const [errors, setErrors] = useState(null);
+  const [toggleSubmit, setToggleSubmit] = useState(true);
   const [estados, setEstados] = useState([]);
   const [location, setLocation] = useState({
     city: '',
     state: '',
     country: 'br'
   });
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -22,19 +25,19 @@ const Searchbar = props => {
         const parsedUfs = ufsData.map(uf => uf.sigla).sort((a, b) => a > b);
         setEstados(parsedUfs);
       } catch (error) {
-        console.log(error);
+        setErrors({error: 'Falha ao buscar UFs'})
         setEstados(null);
       }
     };
     fetchData();
   }, []);
 
-  const [toggleSubmit, setToggleSubmit] = useState(false);
   useEffect(() => {
-    setToggleSubmit(false);
+    setToggleSubmit(true);
+    setErrors(null);
     if(location.city !== '' && location.state !== '') 
-      setToggleSubmit(true);
-  }, [location]);
+      setToggleSubmit(false);
+  }, [location] );
   
   const updateLocation = (e, field) => {
     const data = { [field]: e.target.value };
@@ -57,7 +60,8 @@ const Searchbar = props => {
       const weatherData = await weatherRequest.data;
       console.log(weatherData);
     } catch (error) {
-      console.log(error);
+      const message = error.response.data;
+      setErrors(message);
     }
   };
 
@@ -75,10 +79,16 @@ const Searchbar = props => {
           value={location.state}
           onChange={e => updateLocation(e, 'state')} />}
 
-      {toggleSubmit ? 
-        <S.Button onClick={sendLocation}>Pesquisar</S.Button>
-      :
-        null}
+      <S.Button disabled={toggleSubmit} 
+        onClick={sendLocation}>
+          Pesquisar
+      </S.Button>
+
+      <S.Break/>
+
+      {errors ? 
+        <S.ErrorMessage>{errors.error}</S.ErrorMessage>
+      : null}
     </S.SearchBarContainer>
   );
 }
