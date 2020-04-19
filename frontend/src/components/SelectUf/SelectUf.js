@@ -2,7 +2,7 @@ import React from 'react';
 
 const SelectUf = props => {
   const options = props.uflist.map(uf => (
-    <option value={uf}>{uf}</option>
+    <option key={uf} value={uf}>{uf}</option>
   ));
 
   return(
