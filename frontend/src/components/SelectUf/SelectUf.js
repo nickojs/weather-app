@@ -6,7 +6,7 @@ const SelectUf = props => {
   ));
 
   return(
-    <select name="state">
+    <select name="state" onChange={props.setEstado}>
       {options}
     </select>
   );
