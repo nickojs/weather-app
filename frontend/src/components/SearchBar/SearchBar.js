@@ -26,13 +26,29 @@ const Searchbar = props => {
     setLocation(updatedLocation);
   }
 
+  const sendLocation = async () => {
+    try {
+      const weatherRequest = await fetch('http://localhost:5000/weather/', {
+        method: 'POST',
+        body: JSON.stringify(location),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const weatherData = await weatherRequest.json();
+      console.log(weatherData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return(
     <S.SearchBarContainer>
       <S.Input type="text" name="city" placeholder="Cidade" 
         onChange={e => updateLocation(e, 'city')}
       />
       <SelectUf uflist={estados} setEstado={e => updateLocation(e, 'state')} />
-      <S.Button>Pesquisar</S.Button>
+      <S.Button onClick={sendLocation}>Pesquisar</S.Button>
     </S.SearchBarContainer>
   );
 }
