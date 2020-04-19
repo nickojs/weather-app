@@ -1,4 +1,4 @@
-const axios = require('./axios');
+const axios = require('./axios-weather');
 const ErrorHandler = require('../models/http-error');
 
 // decides which api to call based on args quantity
