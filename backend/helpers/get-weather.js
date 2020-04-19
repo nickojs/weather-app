@@ -1,4 +1,5 @@
 const axios = require('./axios');
+const ErrorHandler = require('../models/http-error');
 
 // decides which api to call based on args quantity
 const getWeather = async (...args) => { 
@@ -10,11 +11,15 @@ const getWeather = async (...args) => {
   if (args.length === 2)
     params = `?lat=${args[0]}&lon=${args[1]}`
   
-  const weatherByCity = await axios.get(
-    `${params}&appid=${process.env.API_KEY}&lang=pt_br`
-  );
-  
-  return weatherByCity.data;
+  try {
+    const weather = await axios.get(
+      `${params}&appid=${process.env.API_KEY}&lang=pt_br`
+    );
+    return weather.data;
+  } catch (error) {
+    throw new ErrorHandler('Couldn\'t fetch data', 404);
+  }
+
 };
 
 module.exports = getWeather;
