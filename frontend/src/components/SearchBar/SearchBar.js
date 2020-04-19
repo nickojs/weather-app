@@ -27,6 +27,11 @@ const Searchbar = props => {
   }
 
   const sendLocation = async () => {
+    if (location.city === null || location.state === null) {
+      console.log('not fetching anything')
+      return;
+    }
+
     try {
       const weatherRequest = await fetch('http://localhost:5000/weather/', {
         method: 'POST',
