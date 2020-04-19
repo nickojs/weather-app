@@ -17,7 +17,6 @@ class WeatherController {
 
       res.status(200).json({ data: payload });
     } catch (error) {
-      console.log(error);
       next(error);
     }
   };

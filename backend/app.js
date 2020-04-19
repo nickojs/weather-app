@@ -18,7 +18,7 @@ app.use((err, req, res, next) => {
     return next(err);
   }
   res.status(err.code || 500);
-  res.send({ error: err.message });
+  res.send({ error: err.message, code: err.code });
 });
 
 app.listen(5000);
