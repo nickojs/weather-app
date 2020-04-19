@@ -9,7 +9,10 @@ class WeatherController {
       const weatherData = await getWeather(city, state, country);
 
       const payload = {
-        location: { city, state },
+        location: { 
+          city: weatherData.name, 
+          state: weatherData.sys.country 
+        },
         weather: weatherData.weather[0], 
         main: weatherData.main, 
         wind: weatherData.wind
