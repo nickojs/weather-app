@@ -11,7 +11,8 @@ class WeatherController {
       const payload = {
         location: { 
           city: weatherData.name, 
-          state: weatherData.sys.country 
+          state: state || null,
+          country: weatherData.sys.country 
         },
         weather: weatherData.weather[0], 
         main: weatherData.main, 
