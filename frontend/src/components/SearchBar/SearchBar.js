@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import * as S from './styles.js';
 import SelectUf from '../SelectUf/SelectUf';
+import * as S from './styles.js';
+import axios from 'axios';
 
 const Searchbar = props => {
   const [estados, setEstados] = useState([]);
@@ -11,11 +12,18 @@ const Searchbar = props => {
   });
   useEffect(() => {
     async function fetchData() {
-      const ufs = await fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados');
-      const ufsData = await ufs.json();
-      const parsedUfs = ufsData.map(uf => uf.sigla).sort((a, b) => a > b);
-      setEstados(parsedUfs);
-    }
+      try {
+        const ufs = await axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados', {
+          responseType: 'json'
+        });
+        const ufsData = await ufs.data;
+        const parsedUfs = ufsData.map(uf => uf.sigla).sort((a, b) => a > b);
+        setEstados(parsedUfs);
+      } catch (error) {
+        console.log(error);
+        setEstados(null);
+      }
+    };
     fetchData();
   }, []);
 
@@ -33,10 +41,7 @@ const Searchbar = props => {
   }
 
   const sendLocation = async () => {
-    if (location.city === null || location.state === null) {
-      console.log('not fetching anything')
-      return;
-    }
+    if (location.city === null || location.state === null) return;
 
     try {
       const weatherRequest = await fetch('http://localhost:5000/weather/', {
@@ -57,18 +62,20 @@ const Searchbar = props => {
     <S.SearchBarContainer>
       <S.Input type="text" name="city" placeholder="Cidade" 
         value={location.city}
-        onChange={e => updateLocation(e, 'city')}
-      />
-      <SelectUf uflist={estados} 
-        value={location.state}
-        setEstado={e => updateLocation(e, 'state')} 
-      />
+        onChange={e => updateLocation(e, 'city')} />
+      {estados ? 
+        <SelectUf uflist={estados} 
+          value={location.state}
+          setEstado={e => updateLocation(e, 'state')} />  
+        :
+        <S.Input type="text" name="state" placeholder="UF" 
+          value={location.state}
+          onChange={e => updateLocation(e, 'state')} />}
 
       {toggleSubmit ? 
         <S.Button onClick={sendLocation}>Pesquisar</S.Button>
       :
-        null
-      }
+        null}
       
     </S.SearchBarContainer>
   );
