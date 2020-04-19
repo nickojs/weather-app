@@ -9,7 +9,6 @@ const Searchbar = props => {
     state: '',
     country: 'br'
   });
-
   useEffect(() => {
     async function fetchData() {
       const ufs = await fetch('https://servicodados.ibge.gov.br/api/v1/localidades/estados');
@@ -20,6 +19,15 @@ const Searchbar = props => {
     fetchData();
   }, []);
 
+  const [toggleSubmit, setToggleSubmit] = useState(false);
+  useEffect(() => {
+    if(location.city !== '' && location.state !== '') {
+      setToggleSubmit(true);
+    } else {
+      setToggleSubmit(false);
+    }
+  }, [location]);
+  
   const updateLocation = (e, field) => {
     const data = { [field]: e.target.value };
     const updatedLocation = { ...location, ...data };
@@ -57,7 +65,13 @@ const Searchbar = props => {
         value={location.state}
         setEstado={e => updateLocation(e, 'state')} 
       />
-      <S.Button onClick={sendLocation}>Pesquisar</S.Button>
+
+      {toggleSubmit ? 
+        <S.Button onClick={sendLocation}>Pesquisar</S.Button>
+      :
+        null
+      }
+      
     </S.SearchBarContainer>
   );
 }
