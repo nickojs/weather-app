@@ -6,7 +6,7 @@ const getWeather = async (...args) => {
   let params;
 
   if (args.length === 3)
-    params = '?q=' + args.map(a => a).join(',');
+    params = '?q=' + args.map(a => encodeURIComponent(a)).join(',');
   
   if (args.length === 2)
     params = `?lat=${args[0]}&lon=${args[1]}`
