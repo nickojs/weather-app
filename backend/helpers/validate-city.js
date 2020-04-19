@@ -1,4 +1,4 @@
-const axios = require('axios');
+const axios = require('../helpers/axios-ibge');
 
 const validateCity = async (_, { req }) => {
   try {
@@ -6,21 +6,15 @@ const validateCity = async (_, { req }) => {
     const parsedCity = city.toUpperCase();
     const parsedState = state.toUpperCase();
     
-    const stateList = await axios({
-      method: 'get',
-      url: 'localidades/estados',
-      baseURL: 'https://servicodados.ibge.gov.br/api/v1'
-    });
+    const stateList = await axios.get('localidades/estados');
     const stateListData = await stateList.data;
 
     const currentState   = stateListData.filter(uf => uf.sigla === parsedState);
     const currentStateId = currentState[0].id;
 
-    const citiesByState = await axios({
-      method: 'get',
-      url:`localidades/estados/${currentStateId}/municipios`,
-      baseURL: 'https://servicodados.ibge.gov.br/api/v1'
-    });
+    const citiesByState = await axios.get(
+      `localidades/estados/${currentStateId}/municipios`
+    );
     const citiesByStateData = citiesByState.data.map(
       city => city.nome.toUpperCase()
     );
