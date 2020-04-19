@@ -5,8 +5,8 @@ import SelectUf from '../SelectUf/SelectUf';
 const Searchbar = props => {
   const [estados, setEstados] = useState([]);
   const [location, setLocation] = useState({
-    city: null,
-    state: null,
+    city: '',
+    state: '',
     country: 'br'
   });
 
@@ -50,9 +50,13 @@ const Searchbar = props => {
   return(
     <S.SearchBarContainer>
       <S.Input type="text" name="city" placeholder="Cidade" 
+        value={location.city}
         onChange={e => updateLocation(e, 'city')}
       />
-      <SelectUf uflist={estados} setEstado={e => updateLocation(e, 'state')} />
+      <SelectUf uflist={estados} 
+        value={location.state}
+        setEstado={e => updateLocation(e, 'state')} 
+      />
       <S.Button onClick={sendLocation}>Pesquisar</S.Button>
     </S.SearchBarContainer>
   );

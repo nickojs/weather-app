@@ -6,7 +6,7 @@ const SelectUf = props => {
   ));
 
   return(
-    <select name="state" onChange={props.setEstado}>
+    <select name="state" onChange={props.setEstado} value={props.value}>
       <option value="">Selecione...</option>
       {options}
     </select>
