@@ -9,10 +9,10 @@ const app = express();
 app.use(bodyParser.json());
 app.use(CORS);
 
-//weather routes
-app.use('/weather', weatherRoutes)
+// weather routes
+app.use('/weather', weatherRoutes);
 
-//error handling
+// error handling
 app.use((err, req, res, next) => {
   if (res.headersSent) {
     return next(err);
