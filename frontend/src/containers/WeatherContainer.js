@@ -3,15 +3,16 @@ import SearchBar from '../components/SearchBar/SearchBar';
 import WeatherCard from '../components/WeatherCard/WeatherCard';
 
 const WeatherContainer = () => {
-  const [weatherData, setWeatherData] = useState();
-  const getWeatherData = (data) => {
+  const [weatherData, setWeatherData] = useState(null);
+  const weatherHandler = (data) => {
+    console.log(data);
     setWeatherData(data);
   };
 
   return (
     <div>
-      <SearchBar getWeatherData={getWeatherData} />
-      <WeatherCard />
+      <SearchBar sendWeather={weatherHandler} />
+      <WeatherCard weatherData={weatherData} />
     </div>
   );
 };
