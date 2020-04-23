@@ -15,7 +15,7 @@ const getWeather = async (...args) => {
 
   try {
     const weather = await axios.get(
-      `${params}&appid=${process.env.API_KEY}&lang=pt_br`
+      `${params}&units=metric&appid=${process.env.API_KEY}&lang=pt_br`
     );
     return weather.data;
   } catch (error) {
