@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import SelectUf from '../SelectUf/SelectUf';
 import * as S from './styles';
+import * as request from '../../helpers/fetch-data';
 
 const Searchbar = ({ sendWeather, toggleLoading }) => {
   const [errors, setErrors] = useState(null);
@@ -14,22 +14,16 @@ const Searchbar = ({ sendWeather, toggleLoading }) => {
   });
 
   useEffect(() => {
-    async function fetchData() {
+    async function populateEstados() {
       try {
-        const ufs = await axios({
-          url: 'localidades/estados',
-          baseURL: 'https://servicodados.ibge.gov.br/api/v1',
-          responseType: 'json'
-        });
-        const ufsData = await ufs.data;
-        const parsedUfs = ufsData.map((uf) => uf.sigla).sort((a, b) => a > b);
-        setEstados(parsedUfs);
-      } catch (error) {
+        const ufList = await request.fetchUf();
+        setEstados(ufList);
+      } catch (err) {
         setErrors({ error: 'Falha ao buscar UFs' });
         setEstados(null);
       }
     }
-    fetchData();
+    populateEstados();
   }, []);
 
   useEffect(() => {
@@ -46,23 +40,12 @@ const Searchbar = ({ sendWeather, toggleLoading }) => {
 
   const sendLocation = async () => {
     setToggleSubmit(true);
+    toggleLoading();
     try {
-      toggleLoading();
-      const weatherRequest = await axios({
-        url: 'http://localhost:5000/weather/',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        data: location
-      });
-      const weatherResponse = await weatherRequest.data; // 'data' as in axios response
-      // hook to weatherContainer
-      sendWeather(weatherResponse.data); // 'data' as in backend object
+      const weather = await request.fetchWeather(location);
+      sendWeather(weather);
     } catch (error) {
-      const message = error.response.data;
-      setErrors(message);
-      console.log(error);
+      setErrors(error.response.data);
     } finally {
       toggleLoading();
     }
