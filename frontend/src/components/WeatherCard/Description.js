@@ -5,12 +5,8 @@ const Description = ({ data }) => {
 
   return (
     <div>
+      <img src={`https://openweathermap.org/img/wn/${icon}@2x.png`} alt={description} />
       <h1>
-        image(icon):
-        {icon}
-      </h1>
-      <h1>
-        description:
         {description}
       </h1>
     </div>
