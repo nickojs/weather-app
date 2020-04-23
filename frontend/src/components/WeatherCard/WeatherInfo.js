@@ -8,8 +8,8 @@ const WeatherInfo = ({ data }) => (
     <WeatherInfoLine title="Sensação térmica" data={data.feels_like} />
     <WeatherInfoLine title="Mínima" data={data.temp_min} />
     <WeatherInfoLine title="Máxima" data={data.temp_max} />
-    <WeatherInfoLine title="Umidade" data={data.humidity} />
-    <WeatherInfoLine title="Pressão" data={data.pressure} />
+    <WeatherInfoLine title="Umidade" data={data.humidity} type="%" />
+    <WeatherInfoLine title="Pressão" data={data.pressure} type="hPa" />
   </S.InfoContainer>
 );
 
