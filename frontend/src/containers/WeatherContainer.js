@@ -4,15 +4,16 @@ import WeatherCard from '../components/WeatherCard/WeatherCard';
 
 const WeatherContainer = () => {
   const [weatherData, setWeatherData] = useState(null);
-  const weatherHandler = (data) => {
-    console.log(data);
-    setWeatherData(data);
-  };
+  const [loading, setLoading] = useState(false);
+
+  const weatherHandler = (data) => setWeatherData(data);
+  const loadingHandler = () => setLoading((prevState) => !prevState);
 
   return (
     <div>
-      <SearchBar sendWeather={weatherHandler} />
-      <WeatherCard weatherData={weatherData} />
+      <SearchBar sendWeather={weatherHandler} toggleLoading={loadingHandler} />
+      {loading ? <p>loading...</p>
+        : <WeatherCard weatherData={weatherData} />}
     </div>
   );
 };

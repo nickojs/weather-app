@@ -3,7 +3,7 @@ import axios from 'axios';
 import SelectUf from '../SelectUf/SelectUf';
 import * as S from './styles';
 
-const Searchbar = ({ sendWeather }) => {
+const Searchbar = ({ sendWeather, toggleLoading }) => {
   const [errors, setErrors] = useState(null);
   const [toggleSubmit, setToggleSubmit] = useState(true);
   const [estados, setEstados] = useState([]);
@@ -47,6 +47,7 @@ const Searchbar = ({ sendWeather }) => {
   const sendLocation = async () => {
     setToggleSubmit(true);
     try {
+      toggleLoading();
       const weatherRequest = await axios({
         url: 'http://localhost:5000/weather/',
         method: 'POST',
@@ -62,6 +63,8 @@ const Searchbar = ({ sendWeather }) => {
       const message = error.response.data;
       setErrors(message);
       console.log(error);
+    } finally {
+      toggleLoading();
     }
   };
 
