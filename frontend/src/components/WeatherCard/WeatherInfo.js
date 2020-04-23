@@ -1,39 +1,16 @@
 import React from 'react';
+import WeatherInfoLine from './WeatherInfoLine';
+import * as S from './styles';
 
-const WeatherInfo = ({ data }) =>
-// feels_like: 298.88
-// humidity: 73
-// pressure: 1016
-// temp: 297.66
-// temp_max: 298.15
-// temp_min: 297.15
-
-  (
-    <div>
-      <h1>
-        Temperatura:
-        {data.temp}
-        ºC
-      </h1>
-      <h1>
-        Sensação térmica:
-        {data.feels_like}
-        ºC
-      </h1>
-      <h1>
-        Mínima:
-        {data.temp_min}
-        {' '}
-        ºC
-      </h1>
-      <h1>
-        Máxima:
-        {data.temp_max}
-        {' '}
-        ºC
-      </h1>
-    </div>
-  );
-
+const WeatherInfo = ({ data }) => (
+  <S.InfoContainer>
+    <WeatherInfoLine data={data.temp} />
+    <WeatherInfoLine title="Sensação térmica" data={data.feels_like} />
+    <WeatherInfoLine title="Mínima" data={data.temp_min} />
+    <WeatherInfoLine title="Máxima" data={data.temp_max} />
+    <WeatherInfoLine title="Umidade" data={data.humidity} />
+    <WeatherInfoLine title="Pressão" data={data.pressure} />
+  </S.InfoContainer>
+);
 
 export default WeatherInfo;
