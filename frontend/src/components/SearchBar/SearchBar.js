@@ -3,7 +3,7 @@ import axios from 'axios';
 import SelectUf from '../SelectUf/SelectUf';
 import * as S from './styles';
 
-const Searchbar = () => {
+const Searchbar = ({ sendWeather }) => {
   const [errors, setErrors] = useState(null);
   const [toggleSubmit, setToggleSubmit] = useState(true);
   const [estados, setEstados] = useState([]);
@@ -55,12 +55,13 @@ const Searchbar = () => {
         },
         data: location
       });
-      const weatherData = await weatherRequest.data;
-      // hook to app.js, for now just logging
-      console.log(weatherData);
+      const weatherResponse = await weatherRequest.data; // 'data' as in axios response
+      // hook to weatherContainer
+      sendWeather(weatherResponse.data); // 'data' as in backend object
     } catch (error) {
       const message = error.response.data;
       setErrors(message);
+      console.log(error);
     }
   };
 
