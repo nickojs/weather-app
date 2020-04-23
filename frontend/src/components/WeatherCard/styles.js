@@ -25,5 +25,10 @@ export const InfoContainer = styled.div`
 `;
 
 export const LineContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
   margin: 0 12px;
+  &:first-child{
+    justify-content: center;
+  }
 `;
