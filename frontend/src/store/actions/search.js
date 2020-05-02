@@ -19,3 +19,8 @@ export const loadUfList = () => async (dispatch) => {
     dispatch(loadUfListFail());
   }
 };
+
+export const updateLocation = (location) => ({
+  type: actions.UPDATE_LOCATION,
+  location
+});
