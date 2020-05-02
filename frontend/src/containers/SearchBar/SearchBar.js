@@ -49,6 +49,11 @@ const Searchbar = () => {
     );
   }
 
+  let errorElement = null;
+  if (error) {
+    errorElement = <S.ErrorMessage>{error.error}</S.ErrorMessage>;
+  }
+
   return (
     <S.SearchBarContainer>
       <S.Input
@@ -65,12 +70,8 @@ const Searchbar = () => {
       >
         Pesquisar
       </S.Button>
-
       <S.Break />
-
-      {error
-        ? <S.ErrorMessage>{error.error}</S.ErrorMessage>
-        : null}
+      {errorElement}
     </S.SearchBarContainer>
   );
 };
