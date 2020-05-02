@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import * as searchActions from '../../store/actions/search';
 import SelectUf from '../../components/SelectUf/SelectUf';
 import * as S from './styles';
 import * as request from '../../helpers/fetch-data';
@@ -12,6 +14,12 @@ const Searchbar = ({ sendWeather, toggleLoading }) => {
     state: '',
     country: 'br'
   });
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(searchActions.loadUfList());
+  }, []);
 
   useEffect(() => {
     async function populateEstados() {
