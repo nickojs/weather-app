@@ -7,34 +7,20 @@ import * as searchActions from '../../store/actions/search';
 
 const Searchbar = ({ sendWeather, toggleLoading }) => {
   const [errors, setErrors] = useState(null);
-  const [toggleSubmit, setToggleSubmit] = useState(true);
-  const [location, setLocation] = useState({
-    city: '',
-    state: '',
-    country: 'br'
-  });
-
   const ufListData = useSelector((state) => state.ufList);
-
+  const location = useSelector((state) => state.location);
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(searchActions.loadUfList());
   }, []);
 
-  useEffect(() => {
-    setToggleSubmit(true);
-    setErrors(null);
-    if (location.city !== '' && location.state !== '') { setToggleSubmit(false); }
-  }, [location]);
-
   const updateLocation = (e, field) => {
     const data = { [field]: e.target.value };
-    const updatedLocation = { ...location, ...data };
-    setLocation(updatedLocation);
+    dispatch(searchActions.updateLocation(data));
   };
 
   const sendLocation = async () => {
-    setToggleSubmit(true);
     toggleLoading();
     try {
       const weather = await request.fetchWeather(location);
@@ -65,6 +51,9 @@ const Searchbar = ({ sendWeather, toggleLoading }) => {
     );
   }
 
+  let toggleBtn = true;
+  if (location.city !== '' && location.state !== '') toggleBtn = !toggleBtn;
+
   return (
     <S.SearchBarContainer>
       <S.Input
@@ -76,7 +65,7 @@ const Searchbar = ({ sendWeather, toggleLoading }) => {
       />
       {ufList}
       <S.Button
-        disabled={toggleSubmit}
+        disabled={toggleBtn}
         onClick={sendLocation}
       >
         Pesquisar
