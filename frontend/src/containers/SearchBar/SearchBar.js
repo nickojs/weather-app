@@ -6,7 +6,7 @@ import * as request from '../../helpers/fetch-data';
 import * as searchActions from '../../store/actions/search';
 
 const Searchbar = ({ sendWeather, toggleLoading }) => {
-  const [errors, setErrors] = useState(null);
+  const error = useSelector((state) => state.error);
   const ufListData = useSelector((state) => state.ufList);
   const location = useSelector((state) => state.location);
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ const Searchbar = ({ sendWeather, toggleLoading }) => {
       const weather = await request.fetchWeather(location);
       sendWeather(weather);
     } catch (error) {
-      setErrors(error.response.data);
+      // setErrors(error.response.data);
     } finally {
       toggleLoading();
     }
@@ -39,7 +39,7 @@ const Searchbar = ({ sendWeather, toggleLoading }) => {
       setEstado={(e) => updateLocation(e, 'state')}
     />
   );
-  if (!ufList) {
+  if (ufListData.length === 0) {
     ufList = (
       <S.Input
         type="text"
@@ -73,8 +73,8 @@ const Searchbar = ({ sendWeather, toggleLoading }) => {
 
       <S.Break />
 
-      {errors
-        ? <S.ErrorMessage>{errors.error}</S.ErrorMessage>
+      {error
+        ? <S.ErrorMessage>{error.error}</S.ErrorMessage>
         : null}
     </S.SearchBarContainer>
   );
