@@ -31,19 +31,19 @@ export const fetchWeatherInit = () => ({
 });
 
 export const fetchWeatherFail = (error) => ({
-  type: actions.LOAD_UFLIST_FAIL,
+  type: actions.FETCH_WEATHER_FAIL,
   error
 });
 
 export const fetchWeatherSuccess = (data) => ({
-  type: actions.LOAD_UFLIST_FAIL,
+  type: actions.FETCH_WEATHER_SUCCESS,
   weather: data
 });
 
 export const fetchWeatherHandler = (location) => async (dispatch) => {
   try {
     const data = await fetchWeather(location);
-    dispatch(fetchWeatherFail(data));
+    dispatch(fetchWeatherSuccess(data));
   } catch (error) {
     const errorType = dealWithIt(error);
     dispatch(fetchWeatherFail(errorType));
