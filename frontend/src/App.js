@@ -16,6 +16,6 @@ const App = () => {
         : <WeatherCard weatherData={weatherData} />}
     </div>
   );
-}
+};
 
 export default App;

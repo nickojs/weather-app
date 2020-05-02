@@ -1,9 +1,9 @@
 import * as actions from '../actions/actionTypes';
 
-const initialState = { 
+const initialState = {
   ufList: [],
   error: null
-}
+};
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -18,8 +18,8 @@ export default (state = initialState, action) => {
         ...state,
         error: action.error
       };
-      
+
     default:
       return state;
-  };
+  }
 };
