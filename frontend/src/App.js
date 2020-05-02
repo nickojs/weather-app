@@ -1,10 +1,19 @@
-import React from 'react';
-import WeatherContainer from './containers/WeatherContainer';
+import React, { useState } from 'react';
+import SearchBar from './containers/SearchBar/SearchBar';
+import WeatherCard from './containers/Weather/WeatherCard';
 
-function App() {
+const App = () => {
+  const [weatherData, setWeatherData] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const weatherHandler = (data) => setWeatherData(data);
+  const loadingHandler = () => setLoading((prevState) => !prevState);
+
   return (
-    <div className="App">
-      <WeatherContainer />
+    <div>
+      <SearchBar sendWeather={weatherHandler} toggleLoading={loadingHandler} />
+      {loading ? <p>loading...</p>
+        : <WeatherCard weatherData={weatherData} />}
     </div>
   );
 }

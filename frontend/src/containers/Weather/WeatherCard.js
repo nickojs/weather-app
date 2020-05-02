@@ -1,7 +1,7 @@
 import React from 'react';
-import Location from './Location';
-import Description from './Description';
-import WeatherInfo from './WeatherInfo';
+import Location from '../../components/WeatherCard/Location';
+import Description from '../../components/WeatherCard/Description';
+import WeatherInfo from '../../components/WeatherCard/WeatherInfo';
 import * as S from './styles';
 
 const WeatherCard = ({ weatherData }) => (

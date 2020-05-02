@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import SelectUf from '../SelectUf/SelectUf';
+import SelectUf from '../../components/SelectUf/SelectUf';
 import * as S from './styles';
 import * as request from '../../helpers/fetch-data';
 
