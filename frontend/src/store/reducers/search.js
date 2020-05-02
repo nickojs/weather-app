@@ -7,7 +7,9 @@ const initialState = {
     city: '',
     state: '',
     country: 'br'
-  }
+  },
+  loadingWeather: false,
+  weather: {}
 };
 
 export default (state = initialState, action) => {
@@ -15,7 +17,8 @@ export default (state = initialState, action) => {
     case actions.LOAD_UFLIST_SUCCESS:
       return {
         ...state,
-        ufList: action.ufList
+        ufList: action.ufList,
+        error: null
       };
 
     case actions.LOAD_UFLIST_FAIL:
@@ -30,8 +33,27 @@ export default (state = initialState, action) => {
         location: {
           ...state.location,
           ...action.location
-          // new props
         }
+      };
+
+    case actions.FETCH_WEATHER_INIT:
+      return {
+        ...state,
+        loadingWeather: true
+      };
+
+    case actions.FETCH_WEATHER_SUCCESS:
+      return {
+        ...state,
+        weather: action.weather,
+        loadingWeather: false
+      };
+
+    case actions.FETCH_WEATHER_FAIL:
+      return {
+        ...state,
+        error: action.error,
+        loadingWeather: false
       };
 
     default:

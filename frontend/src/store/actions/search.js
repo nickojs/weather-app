@@ -26,6 +26,10 @@ export const updateLocation = (location) => ({
   location
 });
 
+export const fetchWeatherInit = () => ({
+  type: actions.FETCH_WEATHER_INIT
+});
+
 export const fetchWeatherFail = (error) => ({
   type: actions.LOAD_UFLIST_FAIL,
   error
@@ -41,6 +45,7 @@ export const fetchWeatherHandler = (location) => async (dispatch) => {
     const data = await fetchWeather(location);
     dispatch(fetchWeatherFail(data));
   } catch (error) {
-    dispatch(fetchWeatherFail(error));
+    const errorType = dealWithIt(error);
+    dispatch(fetchWeatherFail(errorType));
   }
 };
