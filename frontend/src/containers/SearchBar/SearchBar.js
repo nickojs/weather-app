@@ -14,7 +14,7 @@ const Searchbar = ({ sendWeather, toggleLoading }) => {
     country: 'br'
   });
 
-  const ufList = useSelector((state) => state.ufList);
+  const ufListData = useSelector((state) => state.ufList);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -46,6 +46,25 @@ const Searchbar = ({ sendWeather, toggleLoading }) => {
     }
   };
 
+  let ufList = (
+    <SelectUf
+      uflist={ufListData}
+      value={location.state}
+      setEstado={(e) => updateLocation(e, 'state')}
+    />
+  );
+  if (!ufList) {
+    ufList = (
+      <S.Input
+        type="text"
+        name="state"
+        placeholder="UF"
+        value={location.state}
+        onChange={(e) => updateLocation(e, 'state')}
+      />
+    );
+  }
+
   return (
     <S.SearchBarContainer>
       <S.Input
@@ -55,24 +74,7 @@ const Searchbar = ({ sendWeather, toggleLoading }) => {
         value={location.city}
         onChange={(e) => updateLocation(e, 'city')}
       />
-      {ufList
-        ? (
-          <SelectUf
-            uflist={ufList}
-            value={location.state}
-            setEstado={(e) => updateLocation(e, 'state')}
-          />
-        )
-        : (
-          <S.Input
-            type="text"
-            name="state"
-            placeholder="UF"
-            value={location.state}
-            onChange={(e) => updateLocation(e, 'state')}
-          />
-        )}
-
+      {ufList}
       <S.Button
         disabled={toggleSubmit}
         onClick={sendLocation}
