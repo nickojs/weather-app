@@ -23,7 +23,7 @@ const loadUfListFail = (state, action) => ({
   error: action.error
 });
 
-export const updateLocation = (state, action) => ({
+const updateLocation = (state, action) => ({
   ...state,
   location: {
     ...state.location,
@@ -31,18 +31,18 @@ export const updateLocation = (state, action) => ({
   }
 });
 
-export const fetchWeatherInit = (state, action) => ({
+const fetchWeatherInit = (state, action) => ({
   ...state,
   loadingWeather: true
 });
 
-export const fetchWeatherSuccess = (state, action) => ({
+const fetchWeatherSuccess = (state, action) => ({
   ...state,
   weather: action.weather,
   loadingWeather: false
 });
 
-export const fetchWeatherFail = (state, action) => ({
+const fetchWeatherFail = (state, action) => ({
   ...state,
   error: action.error,
   loadingWeather: false
