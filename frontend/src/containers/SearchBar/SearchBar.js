@@ -1,37 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import * as searchActions from '../../store/actions/search';
+import { useDispatch, useSelector } from 'react-redux';
 import SelectUf from '../../components/SelectUf/SelectUf';
 import * as S from './styles';
 import * as request from '../../helpers/fetch-data';
+import * as searchActions from '../../store/actions/search';
 
 const Searchbar = ({ sendWeather, toggleLoading }) => {
   const [errors, setErrors] = useState(null);
   const [toggleSubmit, setToggleSubmit] = useState(true);
-  const [estados, setEstados] = useState([]);
   const [location, setLocation] = useState({
     city: '',
     state: '',
     country: 'br'
   });
 
-  const dispatch = useDispatch();
+  const ufList = useSelector((state) => state.ufList);
 
+  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(searchActions.loadUfList());
-  }, []);
-
-  useEffect(() => {
-    async function populateEstados() {
-      try {
-        const ufList = await request.fetchUf();
-        setEstados(ufList);
-      } catch (err) {
-        setErrors({ error: 'Falha ao buscar UFs' });
-        setEstados(null);
-      }
-    }
-    populateEstados();
   }, []);
 
   useEffect(() => {
@@ -68,10 +55,10 @@ const Searchbar = ({ sendWeather, toggleLoading }) => {
         value={location.city}
         onChange={(e) => updateLocation(e, 'city')}
       />
-      {estados
+      {ufList
         ? (
           <SelectUf
-            uflist={estados}
+            uflist={ufList}
             value={location.state}
             setEstado={(e) => updateLocation(e, 'state')}
           />
