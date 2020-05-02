@@ -12,51 +12,50 @@ const initialState = {
   weather: {}
 };
 
+const loadUfListSuccess = (state, action) => ({
+  ...state,
+  ufList: action.ufList,
+  error: null
+});
+
+const loadUfListFail = (state, action) => ({
+  ...state,
+  error: action.error
+});
+
+export const updateLocation = (state, action) => ({
+  ...state,
+  location: {
+    ...state.location,
+    ...action.location
+  }
+});
+
+export const fetchWeatherInit = (state, action) => ({
+  ...state,
+  loadingWeather: true
+});
+
+export const fetchWeatherSuccess = (state, action) => ({
+  ...state,
+  weather: action.weather,
+  loadingWeather: false
+});
+
+export const fetchWeatherFail = (state, action) => ({
+  ...state,
+  error: action.error,
+  loadingWeather: false
+});
+
 export default (state = initialState, action) => {
   switch (action.type) {
-    case actions.LOAD_UFLIST_SUCCESS:
-      return {
-        ...state,
-        ufList: action.ufList,
-        error: null
-      };
-
-    case actions.LOAD_UFLIST_FAIL:
-      return {
-        ...state,
-        error: action.error
-      };
-
-    case actions.UPDATE_LOCATION:
-      return {
-        ...state,
-        location: {
-          ...state.location,
-          ...action.location
-        }
-      };
-
-    case actions.FETCH_WEATHER_INIT:
-      return {
-        ...state,
-        loadingWeather: true
-      };
-
-    case actions.FETCH_WEATHER_SUCCESS:
-      return {
-        ...state,
-        weather: action.weather,
-        loadingWeather: false
-      };
-
-    case actions.FETCH_WEATHER_FAIL:
-      return {
-        ...state,
-        error: action.error,
-        loadingWeather: false
-      };
-
-    default:
-      return state;
+    case actions.LOAD_UFLIST_SUCCESS: return loadUfListSuccess(state, action);
+    case actions.LOAD_UFLIST_FAIL: return loadUfListFail(state, action);
+    case actions.UPDATE_LOCATION: return updateLocation(state, action);
+    case actions.FETCH_WEATHER_INIT: return fetchWeatherInit(state, action);
+    case actions.FETCH_WEATHER_SUCCESS: return fetchWeatherSuccess(state, action);
+    case actions.FETCH_WEATHER_FAIL: return fetchWeatherFail(state, action);
+    default: return state;
   }
 };
