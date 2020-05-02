@@ -26,3 +26,16 @@ export const fetchWeather = async (location) => {
   // 'data' as in backend object with weather information
   return weatherResponse.data;
 };
+
+
+export const dealWithIt = (error) => {
+  if (error.response) {
+    console.log('regular error: ');
+    return { error: error.response.data };
+  } if (error.request) {
+    console.log('no response error: ');
+    return { error: error.message };
+  }
+  console.log('other error: ');
+  return { error: error.message };
+};

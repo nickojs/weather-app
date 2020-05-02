@@ -1,5 +1,5 @@
 import * as actions from './actionTypes';
-import { fetchUf, fetchWeather } from '../../helpers/fetch-data';
+import { fetchUf, fetchWeather, dealWithIt } from '../../helpers/fetch-data';
 
 export const loadUfListSuccess = (ufList) => ({
   type: actions.LOAD_UFLIST_SUCCESS,
@@ -16,7 +16,8 @@ export const loadUfList = () => async (dispatch) => {
     const data = await fetchUf();
     dispatch(loadUfListSuccess(data));
   } catch (error) {
-    dispatch(loadUfListFail());
+    const errorType = dealWithIt(error);
+    dispatch(loadUfListFail(errorType));
   }
 };
 
