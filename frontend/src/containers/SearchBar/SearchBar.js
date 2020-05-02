@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import SelectUf from '../../components/SelectUf/SelectUf';
 import * as S from './styles';
-import * as request from '../../helpers/fetch-data';
 import * as searchActions from '../../store/actions/search';
 
-const Searchbar = ({ sendWeather, toggleLoading }) => {
+const Searchbar = () => {
+  const [toggleBtn, setToggleBtn] = useState(true);
   const error = useSelector((state) => state.error);
   const ufListData = useSelector((state) => state.ufList);
   const location = useSelector((state) => state.location);
@@ -15,21 +15,19 @@ const Searchbar = ({ sendWeather, toggleLoading }) => {
     dispatch(searchActions.loadUfList());
   }, []);
 
+  useEffect(() => {
+    setToggleBtn(true);
+    if (location.city !== '' && location.state !== '') setToggleBtn(false);
+  }, [location]);
+
   const updateLocation = (e, field) => {
     const data = { [field]: e.target.value };
     dispatch(searchActions.updateLocation(data));
   };
 
-  const sendLocation = async () => {
-    toggleLoading();
-    try {
-      const weather = await request.fetchWeather(location);
-      sendWeather(weather);
-    } catch (error) {
-      // setErrors(error.response.data);
-    } finally {
-      toggleLoading();
-    }
+  const fetchWeather = () => {
+    dispatch(searchActions.fetchWeatherHandler(location));
+    setToggleBtn((prevState) => !prevState);
   };
 
   let ufList = (
@@ -51,9 +49,6 @@ const Searchbar = ({ sendWeather, toggleLoading }) => {
     );
   }
 
-  let toggleBtn = true;
-  if (location.city !== '' && location.state !== '') toggleBtn = !toggleBtn;
-
   return (
     <S.SearchBarContainer>
       <S.Input
@@ -66,7 +61,7 @@ const Searchbar = ({ sendWeather, toggleLoading }) => {
       {ufList}
       <S.Button
         disabled={toggleBtn}
-        onClick={sendLocation}
+        onClick={fetchWeather}
       >
         Pesquisar
       </S.Button>
