@@ -4,13 +4,14 @@ import UfInput from '../../components/UfInput/UfInput';
 import ErrorMessage from '../../components/UI/ErrorMessage';
 import * as S from './styles';
 import * as searchActions from '../../store/actions/search';
+import * as weatherActions from '../../store/actions/weather';
 
 const Searchbar = () => {
   const dispatch = useDispatch();
   const [toggleBtn, setToggleBtn] = useState(true);
   const {
-    error, ufList, location, loadingUfList
-  } = useSelector((state) => state);
+    error, ufList, location, loading
+  } = useSelector((state) => state.search);
 
   useEffect(() => {
     dispatch(searchActions.loadUfList());
@@ -27,7 +28,7 @@ const Searchbar = () => {
   };
 
   const fetchWeather = () => {
-    dispatch(searchActions.fetchWeatherHandler(location));
+    dispatch(weatherActions.fetchWeatherHandler(location));
     setToggleBtn((prevState) => !prevState);
   };
 
@@ -44,7 +45,7 @@ const Searchbar = () => {
         uflist={ufList}
         value={location.state}
         setUf={(e) => updateLocation(e, 'state')}
-        loading={loadingUfList}
+        loading={loading}
       />
       <S.Button
         disabled={toggleBtn}
