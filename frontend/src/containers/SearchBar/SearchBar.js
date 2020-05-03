@@ -31,11 +31,6 @@ const Searchbar = () => {
     setToggleBtn((prevState) => !prevState);
   };
 
-  let errorC = null;
-  if (error) {
-    errorC = <ErrorMessage>{error.error}</ErrorMessage>;
-  }
-
   return (
     <S.SearchBarContainer>
       <input
@@ -58,7 +53,7 @@ const Searchbar = () => {
         Pesquisar
       </S.Button>
       <S.Break />
-      {errorC}
+      <ErrorMessage error={error} />
     </S.SearchBarContainer>
   );
 };
