@@ -41,6 +41,7 @@ export const fetchWeatherSuccess = (data) => ({
 });
 
 export const fetchWeatherHandler = (location) => async (dispatch) => {
+  dispatch(fetchWeatherInit());
   try {
     const data = await fetchWeather(location);
     dispatch(fetchWeatherSuccess(data));
