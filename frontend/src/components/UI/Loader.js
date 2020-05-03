@@ -6,10 +6,9 @@ const Loader = ({ status }) => (
   <ScaleLoader
     loading={status}
     css={css`
-      margin: 0 auto;
-      background: red;`}
+      display: flex;
+      justify-content: center;`}
   />
-
 );
 
 export default Loader;
