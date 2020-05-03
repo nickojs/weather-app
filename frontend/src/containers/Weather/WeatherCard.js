@@ -21,11 +21,11 @@ const WeatherCard = () => {
     );
   }
   return (
-    <>
+    <S.Container>
       {weatherC}
       <Loader status={loading} />
       <ErrorMessage error={error} />
-    </>
+    </S.Container>
   );
 };
 
