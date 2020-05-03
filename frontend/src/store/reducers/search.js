@@ -13,13 +13,13 @@ const initialState = {
 
 const loadUfListInit = (state, action) => ({
   ...state,
-  loading: true
+  loading: true,
+  error: null
 });
 
 const loadUfListSuccess = (state, action) => ({
   ...state,
   ufList: action.ufList,
-  error: null,
   loading: false
 });
 
@@ -34,7 +34,8 @@ const updateLocation = (state, action) => ({
   location: {
     ...state.location,
     ...action.location
-  }
+  },
+  error: null
 });
 
 export default (state = initialState, action) => {
