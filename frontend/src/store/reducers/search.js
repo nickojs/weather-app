@@ -13,20 +13,20 @@ const initialState = {
 
 const loadUfListInit = (state, action) => ({
   ...state,
-  loadingUfList: true
+  loading: true
 });
 
 const loadUfListSuccess = (state, action) => ({
   ...state,
   ufList: action.ufList,
   error: null,
-  loadingUfList: false
+  loading: false
 });
 
 const loadUfListFail = (state, action) => ({
   ...state,
   error: action.error,
-  loadingUfList: false
+  loading: false
 });
 
 const updateLocation = (state, action) => ({
