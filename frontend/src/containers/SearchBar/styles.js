@@ -8,12 +8,6 @@ export const SearchBarContainer = styled.div`
   background: #bbccdd;
 `;
 
-export const Input = styled.input`
-  border: 0;
-  line-height: 1.3em;
-  padding: 8px;
-`;
-
 export const Button = styled.button`
   margin-left: 8px;
   padding: 8px;

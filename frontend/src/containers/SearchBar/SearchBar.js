@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import SelectUf from '../../components/SelectUf/SelectUf';
+import UfInput from '../../components/UfInput/UfInput';
 import ErrorMessage from '../../components/UI/ErrorMessage';
 import * as S from './styles';
 import * as searchActions from '../../store/actions/search';
@@ -8,7 +8,9 @@ import * as searchActions from '../../store/actions/search';
 const Searchbar = () => {
   const dispatch = useDispatch();
   const [toggleBtn, setToggleBtn] = useState(true);
-  const { error, ufList, location } = useSelector((state) => state);
+  const {
+    error, ufList, location, loadingUfList
+  } = useSelector((state) => state);
 
   useEffect(() => {
     dispatch(searchActions.loadUfList());
@@ -29,25 +31,6 @@ const Searchbar = () => {
     setToggleBtn((prevState) => !prevState);
   };
 
-  let ufListC = (
-    <SelectUf
-      uflist={ufList}
-      value={location.state}
-      setEstado={(e) => updateLocation(e, 'state')}
-    />
-  );
-  if (ufList.length === 0) {
-    ufListC = (
-      <S.Input
-        type="text"
-        name="state"
-        placeholder="UF"
-        value={location.state}
-        onChange={(e) => updateLocation(e, 'state')}
-      />
-    );
-  }
-
   let errorC = null;
   if (error) {
     errorC = <ErrorMessage>{error.error}</ErrorMessage>;
@@ -55,14 +38,19 @@ const Searchbar = () => {
 
   return (
     <S.SearchBarContainer>
-      <S.Input
+      <input
         type="text"
         name="city"
         placeholder="Cidade"
         value={location.city}
         onChange={(e) => updateLocation(e, 'city')}
       />
-      {ufListC}
+      <UfInput
+        uflist={ufList}
+        value={location.state}
+        setUf={(e) => updateLocation(e, 'state')}
+        loading={loadingUfList}
+      />
       <S.Button
         disabled={toggleBtn}
         onClick={fetchWeather}
