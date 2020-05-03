@@ -31,11 +31,11 @@ export const fetchWeather = async (location) => {
 export const dealWithIt = (error) => {
   if (error.response) {
     console.log('regular error: ');
-    return { error: error.response.data };
+    return { ...error.response.data };
   } if (error.request) {
     console.log('no response error: ');
-    return { error: error.message };
+    return { ...error.message };
   }
   console.log('other error: ');
-  return { error: error.message };
+  return { ...error.message };
 };
