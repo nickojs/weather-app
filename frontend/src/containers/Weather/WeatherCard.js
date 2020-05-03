@@ -7,6 +7,8 @@ import * as S from './styles';
 
 const WeatherCard = () => {
   const weatherData = useSelector((state) => state.weather);
+  const loading = useSelector((state) => state.loadingWeather);
+
   let weatherComponent = null;
   if (weatherData) {
     weatherComponent = (
@@ -17,7 +19,18 @@ const WeatherCard = () => {
       </S.WeatherContainer>
     );
   }
-  return weatherComponent;
+
+  let spinner = null;
+  if (loading) {
+    spinner = <p>Loading...</p>;
+  }
+
+  return (
+    <>
+      {weatherComponent}
+      {spinner}
+    </>
+  );
 };
 
 
