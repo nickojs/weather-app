@@ -1,16 +1,14 @@
 import * as actions from '../actions/actionTypes';
 
 const initialState = {
-  error: null,
   ufList: [],
   location: {
     city: '',
     state: '',
     country: 'br'
   },
-  loadingWeather: false,
-  loadingUfList: false,
-  weather: null
+  error: null,
+  loading: false
 };
 
 const loadUfListInit = (state, action) => ({
@@ -39,34 +37,12 @@ const updateLocation = (state, action) => ({
   }
 });
 
-const fetchWeatherInit = (state, action) => ({
-  ...state,
-  loadingWeather: true,
-  weather: null,
-  error: null
-});
-
-const fetchWeatherSuccess = (state, action) => ({
-  ...state,
-  weather: action.weather,
-  loadingWeather: false
-});
-
-const fetchWeatherFail = (state, action) => ({
-  ...state,
-  error: action.error,
-  loadingWeather: false
-});
-
 export default (state = initialState, action) => {
   switch (action.type) {
     case actions.LOAD_UF_INIT: return loadUfListInit(state, action);
     case actions.LOAD_UFLIST_SUCCESS: return loadUfListSuccess(state, action);
     case actions.LOAD_UFLIST_FAIL: return loadUfListFail(state, action);
     case actions.UPDATE_LOCATION: return updateLocation(state, action);
-    case actions.FETCH_WEATHER_INIT: return fetchWeatherInit(state, action);
-    case actions.FETCH_WEATHER_SUCCESS: return fetchWeatherSuccess(state, action);
-    case actions.FETCH_WEATHER_FAIL: return fetchWeatherFail(state, action);
     default: return state;
   }
 };
