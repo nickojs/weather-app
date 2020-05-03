@@ -34,8 +34,8 @@ export const dealWithIt = (error) => {
     return { ...error.response.data };
   } if (error.request) {
     console.log('no response error: ');
-    return { ...error.message };
+    return { error: error.message };
   }
   console.log('other error: ');
-  return { ...error.message };
+  return { error: error.message };
 };
