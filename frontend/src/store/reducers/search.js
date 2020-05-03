@@ -9,26 +9,26 @@ const initialState = {
     country: 'br'
   },
   loadingWeather: false,
-  loadingUf: false,
+  loadingUfList: false,
   weather: null
 };
 
 const loadUfListInit = (state, action) => ({
   ...state,
-  loadingUf: true
+  loadingUfList: true
 });
 
 const loadUfListSuccess = (state, action) => ({
   ...state,
   ufList: action.ufList,
   error: null,
-  loadingUf: false
+  loadingUfList: false
 });
 
 const loadUfListFail = (state, action) => ({
   ...state,
   error: action.error,
-  loadingUf: false
+  loadingUfList: false
 });
 
 const updateLocation = (state, action) => ({
