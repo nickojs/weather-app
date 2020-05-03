@@ -9,7 +9,7 @@ const initialState = {
     country: 'br'
   },
   loadingWeather: false,
-  weather: {}
+  weather: null
 };
 
 const loadUfListSuccess = (state, action) => ({
