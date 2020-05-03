@@ -33,7 +33,9 @@ const updateLocation = (state, action) => ({
 
 const fetchWeatherInit = (state, action) => ({
   ...state,
-  loadingWeather: true
+  loadingWeather: true,
+  weather: null,
+  error: null
 });
 
 const fetchWeatherSuccess = (state, action) => ({
