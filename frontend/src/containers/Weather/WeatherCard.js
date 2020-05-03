@@ -7,7 +7,7 @@ import Loader from '../../components/UI/Loader';
 import * as S from './styles';
 
 const WeatherCard = () => {
-  const { weather, loadingWeather } = useSelector((state) => state);
+  const { weather, loading } = useSelector((state) => state.weather);
 
   let weatherC = null;
   if (weather) {
@@ -22,7 +22,7 @@ const WeatherCard = () => {
   return (
     <>
       {weatherC}
-      <Loader status={loadingWeather} />
+      <Loader status={loading} />
     </>
   );
 };
