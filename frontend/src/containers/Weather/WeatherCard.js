@@ -10,9 +10,9 @@ import * as S from './styles';
 const WeatherCard = () => {
   const { weather, loading, error } = useSelector((state) => state.weather);
 
-  let weatherC = null;
+  let weatherComponent = null;
   if (weather) {
-    weatherC = (
+    weatherComponent = (
       <S.WeatherContainer>
         <Location data={weather.location} />
         <Description data={weather.weather} />
@@ -22,12 +22,11 @@ const WeatherCard = () => {
   }
   return (
     <S.Container>
-      {weatherC}
+      {weatherComponent}
       <Loader status={loading} />
       <ErrorMessage error={error} />
     </S.Container>
   );
 };
-
 
 export default WeatherCard;
