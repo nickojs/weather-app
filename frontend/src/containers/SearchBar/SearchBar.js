@@ -5,11 +5,9 @@ import * as S from './styles';
 import * as searchActions from '../../store/actions/search';
 
 const Searchbar = () => {
-  const [toggleBtn, setToggleBtn] = useState(true);
-  const error = useSelector((state) => state.error);
-  const ufListData = useSelector((state) => state.ufList);
-  const location = useSelector((state) => state.location);
   const dispatch = useDispatch();
+  const [toggleBtn, setToggleBtn] = useState(true);
+  const { error, ufList, location } = useSelector((state) => state);
 
   useEffect(() => {
     dispatch(searchActions.loadUfList());
@@ -30,15 +28,15 @@ const Searchbar = () => {
     setToggleBtn((prevState) => !prevState);
   };
 
-  let ufList = (
+  let ufListC = (
     <SelectUf
-      uflist={ufListData}
+      uflist={ufList}
       value={location.state}
       setEstado={(e) => updateLocation(e, 'state')}
     />
   );
-  if (ufListData.length === 0) {
-    ufList = (
+  if (ufList.length === 0) {
+    ufListC = (
       <S.Input
         type="text"
         name="state"
@@ -63,7 +61,7 @@ const Searchbar = () => {
         value={location.city}
         onChange={(e) => updateLocation(e, 'city')}
       />
-      {ufList}
+      {ufListC}
       <S.Button
         disabled={toggleBtn}
         onClick={fetchWeather}
