@@ -9,18 +9,26 @@ const initialState = {
     country: 'br'
   },
   loadingWeather: false,
+  loadingUf: false,
   weather: null
 };
+
+const loadUfListInit = (state, action) => ({
+  ...state,
+  loadingUf: true
+});
 
 const loadUfListSuccess = (state, action) => ({
   ...state,
   ufList: action.ufList,
-  error: null
+  error: null,
+  loadingUf: false
 });
 
 const loadUfListFail = (state, action) => ({
   ...state,
-  error: action.error
+  error: action.error,
+  loadingUf: false
 });
 
 const updateLocation = (state, action) => ({
@@ -52,6 +60,7 @@ const fetchWeatherFail = (state, action) => ({
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case actions.LOAD_UF_INIT: return loadUfListInit(state, action);
     case actions.LOAD_UFLIST_SUCCESS: return loadUfListSuccess(state, action);
     case actions.LOAD_UFLIST_FAIL: return loadUfListFail(state, action);
     case actions.UPDATE_LOCATION: return updateLocation(state, action);
