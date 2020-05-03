@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import SelectUf from '../../components/SelectUf/SelectUf';
+import ErrorMessage from '../../components/UI/ErrorMessage';
 import * as S from './styles';
 import * as searchActions from '../../store/actions/search';
 
@@ -47,9 +48,9 @@ const Searchbar = () => {
     );
   }
 
-  let errorElement = null;
+  let errorC = null;
   if (error) {
-    errorElement = <S.ErrorMessage>{error.error}</S.ErrorMessage>;
+    errorC = <ErrorMessage>{error.error}</ErrorMessage>;
   }
 
   return (
@@ -69,7 +70,7 @@ const Searchbar = () => {
         Pesquisar
       </S.Button>
       <S.Break />
-      {errorElement}
+      {errorC}
     </S.SearchBarContainer>
   );
 };
