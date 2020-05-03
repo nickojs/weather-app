@@ -3,8 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import UfInput from '../../components/UfInput/UfInput';
 import ErrorMessage from '../../components/UI/ErrorMessage';
 import * as S from './styles';
-import * as searchActions from '../../store/actions/search';
-import * as weatherActions from '../../store/actions/weather';
+import * as actions from '../../store/actions';
 
 const Searchbar = () => {
   const dispatch = useDispatch();
@@ -14,7 +13,7 @@ const Searchbar = () => {
   } = useSelector((state) => state.search);
 
   useEffect(() => {
-    dispatch(searchActions.loadUfList());
+    dispatch(actions.loadUfList());
   }, []);
 
   useEffect(() => {
@@ -24,11 +23,11 @@ const Searchbar = () => {
 
   const updateLocation = (e, field) => {
     const data = { [field]: e.target.value };
-    dispatch(searchActions.updateLocation(data));
+    dispatch(actions.updateLocation(data));
   };
 
   const fetchWeather = () => {
-    dispatch(weatherActions.fetchWeatherHandler(location));
+    dispatch(actions.fetchWeatherHandler(location));
     setToggleBtn((prevState) => !prevState);
   };
 
