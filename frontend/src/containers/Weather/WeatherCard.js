@@ -3,32 +3,26 @@ import { useSelector } from 'react-redux';
 import Location from '../../components/WeatherCard/Location';
 import Description from '../../components/WeatherCard/Description';
 import WeatherInfo from '../../components/WeatherCard/WeatherInfo';
+import Loader from '../../components/UI/Loader';
 import * as S from './styles';
 
 const WeatherCard = () => {
-  const weatherData = useSelector((state) => state.weather);
-  const loading = useSelector((state) => state.loadingWeather);
+  const { weather, loadingWeather } = useSelector((state) => state);
 
-  let weatherComponent = null;
-  if (weatherData) {
-    weatherComponent = (
+  let weatherC = null;
+  if (weather) {
+    weatherC = (
       <S.WeatherContainer>
-        <Location data={weatherData.location} />
-        <Description data={weatherData.weather} />
-        <WeatherInfo data={weatherData.main} />
+        <Location data={weather.location} />
+        <Description data={weather.weather} />
+        <WeatherInfo data={weather.main} />
       </S.WeatherContainer>
     );
   }
-
-  let spinner = null;
-  if (loading) {
-    spinner = <p>Loading...</p>;
-  }
-
   return (
     <>
-      {weatherComponent}
-      {spinner}
+      {weatherC}
+      <Loader status={loadingWeather} />
     </>
   );
 };
