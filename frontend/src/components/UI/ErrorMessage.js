@@ -1,16 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import * as S from './styles';
 
-const ErrorMessage = (props) => {
-  const [toggle, setToggle] = useState(false);
+const ErrorMessage = ({ error }) => {
+  let errorMessageC = null;
 
-  useEffect(() => { // memory leak problem
-    setTimeout(() => setToggle(true), 5000);
-  }, []);
-
-  let errorMessageC = <S.ErrorMessage>{props.children}</S.ErrorMessage>;
-  if (toggle) {
-    errorMessageC = null;
+  if (error) {
+    const message = error.error;
+    errorMessageC = <S.ErrorMessage>{message}</S.ErrorMessage>;
   }
 
   return errorMessageC;
